@@ -1,8 +1,12 @@
 package com.example.smartconverter;
 
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.activity.OnBackPressedCallback;
 import androidx.viewpager2.widget.ViewPager2;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
@@ -13,6 +17,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         ViewPager2 pager = findViewById(R.id.pager);
         TabLayout tabs   = findViewById(R.id.tabs);
@@ -25,18 +32,36 @@ public class MainActivity extends AppCompatActivity {
             else          tab.setText("Distance");
         }).attach();
 
-        // Remplacement de onBackPressed (API moderne)
         getOnBackPressedDispatcher().addCallback(this,
-                new androidx.activity.OnBackPressedCallback(true) {
+                new OnBackPressedCallback(true) {
                     @Override
                     public void handleOnBackPressed() {
-                        new AlertDialog.Builder(MainActivity.this)
-                                .setTitle("Quitter")
-                                .setMessage("Souhaitez-vous quitter l'application ?")
-                                .setPositiveButton("Oui", (d, w) -> finish())
-                                .setNegativeButton("Non", null)
-                                .show();
+                        afficherDialogueQuitter();
                     }
                 });
+    }
+
+    private void afficherDialogueQuitter() {
+        new AlertDialog.Builder(this)
+                .setTitle("Quitter")
+                .setMessage("Souhaitez-vous quitter l'application ?")
+                .setPositiveButton("Oui", (d, w) -> finish())
+                .setNegativeButton("Non", null)
+                .show();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_quitter) {
+            afficherDialogueQuitter();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

@@ -5,9 +5,14 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <View
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="40dp"/>
+        android:layout_height="72dp"
+        android:background="#FF6F00"
+        android:paddingTop="30dp"
+        app:title="Converter"
+        app:titleTextColor="#FFFFFF"/>
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabs"
@@ -18,7 +23,6 @@
         app:tabIndicatorColor="#FF6F00"
         app:tabSelectedTextColor="#FF6F00"
         app:tabTextColor="#888888"
-        app:tabRippleColor="#FFCC80"
         android:background="?attr/colorSurface"/>
 
     <androidx.viewpager2.widget.ViewPager2
